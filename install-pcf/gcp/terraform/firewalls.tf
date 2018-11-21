@@ -41,18 +41,18 @@ resource "google_compute_firewall" "pcf-allow-https" {
 }
 
 //// GO Router Health Checks
-resource "google_compute_firewall" "pcf-allow-http-8080" {
-  name    = "${var.prefix}-allow-http-8080"
-  network = "${google_compute_network.pcf-virt-net.name}"
+# resource "google_compute_firewall" "pcf-allow-http-8080" {
+#   name    = "${var.prefix}-allow-http-8080"
+#   network = "${google_compute_network.pcf-virt-net.name}"
 
-  allow {
-    protocol = "tcp"
-    ports    = ["8080"]
-  }
+#   allow {
+#     protocol = "tcp"
+#     ports    = ["8080"]
+#   }
 
-  source_ranges = ["0.0.0.0/0"]
-  target_tags   = ["router"]
-}
+#   source_ranges = ["0.0.0.0/0"]
+#   target_tags   = ["router"]
+# }
 
 //// Create Firewall Rule for allow-ert-all com between bosh deployed ert jobs
 //// This will match the default OpsMan tag configured for the deployment
@@ -78,29 +78,29 @@ resource "google_compute_firewall" "allow-ert-all" {
 }
 
 //// Allow access to ssh-proxy [Optional]
-resource "google_compute_firewall" "cf-ssh-proxy" {
-  name       = "${var.prefix}-allow-ssh-proxy"
-  depends_on = ["google_compute_network.pcf-virt-net"]
-  network    = "${google_compute_network.pcf-virt-net.name}"
+# resource "google_compute_firewall" "cf-ssh-proxy" {
+#   name       = "${var.prefix}-allow-ssh-proxy"
+#   depends_on = ["google_compute_network.pcf-virt-net"]
+#   network    = "${google_compute_network.pcf-virt-net.name}"
 
-  allow {
-    protocol = "tcp"
-    ports    = ["2222"]
-  }
+#   allow {
+#     protocol = "tcp"
+#     ports    = ["2222"]
+#   }
 
-  target_tags = ["${var.prefix}-ssh-proxy", "diego-brain"]
-}
+#   target_tags = ["${var.prefix}-ssh-proxy", "diego-brain"]
+# }
 
 //// Allow access to Optional CF TCP router
-resource "google_compute_firewall" "cf-tcp" {
-  name       = "${var.prefix}-allow-cf-tcp"
-  depends_on = ["google_compute_network.pcf-virt-net"]
-  network    = "${google_compute_network.pcf-virt-net.name}"
+# resource "google_compute_firewall" "cf-tcp" {
+#   name       = "${var.prefix}-allow-cf-tcp"
+#   depends_on = ["google_compute_network.pcf-virt-net"]
+#   network    = "${google_compute_network.pcf-virt-net.name}"
 
-  allow {
-    protocol = "tcp"
-    ports    = ["1024-65535"]
-  }
+#   allow {
+#     protocol = "tcp"
+#     ports    = ["1024-65535"]
+#   }
 
-  target_tags = ["${var.prefix}-cf-tcp-lb"]
-}
+#   target_tags = ["${var.prefix}-cf-tcp-lb"]
+# }
